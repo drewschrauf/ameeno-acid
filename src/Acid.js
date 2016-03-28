@@ -20,6 +20,8 @@ export default class Acid {
         // add the plugins if any were provided
         if (options.plugins && Array.isArray(options.plugins)) {
             options.plugins.forEach(this.addPlugin.bind(this));
+        } else if (options.plugins && !Array.isArray(options.plugins)) {
+            throw new Error('plugins must be an array');
         }
     }
 

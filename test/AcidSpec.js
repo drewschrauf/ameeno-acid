@@ -34,6 +34,11 @@ describe('acid', () => {
             });
         expect(acid.plugins.test).to.not.be.undefined;
     });
+    it('should throw if plugins is not an array', () => {
+        expect(() => {
+            new Acid({plugins: 'test'});
+        }).to.throw('plugins must be an array');
+    });
 
     it('should not allow calling renderRoute before registerRoutes', () => {
         let acid = new Acid();
