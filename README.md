@@ -142,7 +142,7 @@ If `handleRequest` is not supplied, this method will be invoked against each rou
 
 ### Accessing Configuration
 
-The entire configuration, including any custom keys will be attached to Marko's global object during render. The name returned by the plugin will be the key used on Acid's `config` object. A config in the form:
+The entire configuration, including any custom keys will be attached to Marko's global object during render. The `name` value returned by the plugin will be the key used on Acid's `config` object. A config in the form:
 
     {
         name: 'example',
