@@ -1,7 +1,7 @@
 import Plugin from './Plugin';
 import Router from 'routes';
 import fs from 'fs';
-import { flattenArray } from './util';
+import { flattenArray, arrayToObject } from './util';
 import { renderRoute } from './renderer';
 import appRoot from 'app-root-path';
 
@@ -27,10 +27,7 @@ export default class Acid {
 
     // reduce the pluginsArray to a simple object
     get plugins() {
-        return this.pluginsArray.reduce((prev, curr) => ({
-            ...prev,
-            [curr.name]: curr
-        }), {});
+        return arrayToObject(this.pluginsArray, 'name');
     }
 
     // add a config object to the config array
