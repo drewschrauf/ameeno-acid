@@ -23,15 +23,15 @@ As Marko was designed from the ground up with asynchronous rendering in mind, it
         <p class="author-name">${author.name}</p>
     </author-by-id>
 
-This allows for increased flexibility in your templates as you can decide what data you need, when you need it.
+This allows for increased flexibility in your templates as you can decide what data you need, when you need it. More information about writing your own Marko tags can be found in the [Marko documentation](http://).
 
 ## Getting Started
 
-The recommended way to use Acid is through [webpack-plugin-acid](http://). View the project for documentation on its usage.
+The recommended way to use Acid is through [webpack-plugin-acid](https://github.com/drewschrauf/webpack-plugin-acid). View the project for documentation on its usage.
 
-A config file can be provided at acid.config.js and will be loaded automatically if detected. Following is an example config using the [acid-plugin-static](http://) plugin.
+A config file can be provided at acid.config.js and will be loaded automatically if detected. Following is an example config using the [acid-plugin-static](https://github.com/drewschrauf/acid-plugin-static) plugin.
 
-	var acidPluginStatic = require('acid-plugin-static');
+    var acidPluginStatic = require('acid-plugin-static');
     module.exports = {
         plugins: [
             acidPluginStatic({
@@ -43,9 +43,9 @@ A config file can be provided at acid.config.js and will be loaded automatically
 
 If you wish to use Acid outside of a Webpack environment, you may create an instance by calling the `create` method. This method returns a promise for the actual Acid instance as `create` will also ensure routes are registered which may be an asynchronous task.
 
-	import Acid from 'ameeno-acid';
+    import Acid from 'ameeno-acid';
     Acid.create().then(acid => {
-    	let myAcid = acid; // this is the acid instance
+        let myAcid = acid; // this is the acid instance
     });
 
 ## Acid Plugins
@@ -97,9 +97,9 @@ A description of each method is provided below.
 
 This method is invoked by acid to map any routes that should be made available to the site. The acceptable return values are:
 
-	- Array
-	- Function returning an Array
-	- Function returning a Promise for an Array
+    - Array
+    - Function returning an Array
+    - Function returning a Promise for an Array
 
 #### handleRequest
 
@@ -107,9 +107,9 @@ This method is invoked by acid to map any routes that should be made available t
 
 If this method is supplied, Marko template rendering will be bypassed and this method will be invoked to generate the content for any routes returned from `resolveRoutes`. The acceptable return values are:
 
-	- Object
-	- Function returning an Object
-	- Function returning a Promise for an Object
+    - Object
+    - Function returning an Object
+    - Function returning a Promise for an Object
 
 #### resolveContext
 
@@ -117,17 +117,17 @@ If this method is supplied, Marko template rendering will be bypassed and this m
 
 If `handleRequest` is not supplied, this method will be invoked against each route returned from `resolveRoutes`. The result of this function will be made available to the template render via:
 
-	${data.context}
+    ${data.context}
 
 and
 
-	${out.global.context}
+    ${out.global.context}
 
 The acceptable return values are:
 
-	- Anything
-	- Function returning anything
-	- Function returning a Promise for anything
+    - Anything
+    - Function returning anything
+    - Function returning a Promise for anything
 
 If this method is not supplied, no context will be provided to the render.
 
@@ -137,8 +137,8 @@ If this method is not supplied, no context will be provided to the render.
 
 If `handleRequest` is not supplied, this method will be invoked against each route return from `resolveRoutes`. This function will be provided both the path and the resolved context in order to select an appropriate template. The acceptable return values are:
 
-	- Path to a Marko template
-	- Function returning a path to a Marko template
+    - Path to a Marko template
+    - Function returning a path to a Marko template
 
 ### Accessing Configuration
 
