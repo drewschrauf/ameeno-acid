@@ -3,7 +3,7 @@ import Router from 'routes';
 import fs from 'fs';
 import { flattenArray, arrayToObject } from './util';
 import { renderRoute } from './renderer';
-import appRoot from 'app-root-path';
+import path from 'path';
 
 // Acid object
 export default class Acid {
@@ -102,7 +102,7 @@ export default class Acid {
 // create a new instance of Acid
 export function create(options) {
     if (!options) {
-        let configPath = appRoot + '/acid.config.js';
+        let configPath = path.resolve('acid.config.js');
         if (fs.existsSync(configPath)) {
             options = require(configPath);
         }

@@ -19,8 +19,6 @@ describe('acid', () => {
         expect(create).to.be.a('function');
     });
 
-    it('should load up the acid.conf.js if no options passed');
-
     it('should accept options to the constructor function', () => {
         let acid = new Acid({marko: 'marko'});
         expect(acid.marko).to.equal('marko');
@@ -43,6 +41,30 @@ describe('acid', () => {
     it('should not allow calling renderRoute before registerRoutes', () => {
         let acid = new Acid();
         return expect(acid.renderRoute('/')).to.eventually.be.rejectedWith('registerRoutes');
+    });
+
+    describe('config loading', () => {
+        beforeEach(() => {
+            AcidModuleRewireAPI.__Rewire__('path', {
+                resolve: path => require.resolve(`./files/${path}`)
+            });
+        });
+
+        afterEach(() => {
+            AcidModuleRewireAPI.__ResetDependency__('path');
+        });
+
+        it('should load up the acid.conf.js if no options passed', () => {
+            create().then(acid => {
+                expect(acid.marko).to.equal('marko');
+            });
+        });
+
+        it('should use passed options if present', () => {
+            create({marko: 'othermarko'}).then(acid => {
+                expect(acid.marko).to.equal('othermarko');
+            });
+        });
     });
 
     describe('acid object', () => {

@@ -17,7 +17,6 @@
     "marko": "2.x"
   },
   "dependencies": {
-    "app-root-path": "^1.0.0",
     "extend": "^3.0.0",
     "markdown": "^0.5.0",
     "routes": "^2.1.0",
