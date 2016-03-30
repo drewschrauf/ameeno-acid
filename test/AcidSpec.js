@@ -135,8 +135,6 @@ describe('acid', () => {
                 });
             });
 
-            it('should call renderRoute from renderer');
-
             describe('renderRoute errors', () => {
                 it('should throw a rejected promise if the route can\'t be found', () => {
                     expect(acid.renderRoute('/')).to.be.a('Promise');
@@ -175,7 +173,7 @@ describe('acid', () => {
                 return expect(acid.resolveRoutes()).to.eventually.eql(['/one', '/two', '/three', '/four']);
             });
 
-            it('should combine routes from multiple pkugins', () => {
+            it('should combine routes from multiple plugins', () => {
                 acid.addPlugin('test', {
                     resolver: {
                         path: '/',
