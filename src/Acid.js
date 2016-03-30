@@ -53,7 +53,7 @@ export default class Acid {
             return plugin.resolveRoutes();
         })).then(routesArray => {
             flattenArray(routesArray).forEach(route => {
-                this.router.addRoute(route.route, () => route.resolver);
+                this.router.addRoute(route.route, route.resolver);
             });
 
             this._routesRegistered = true;
@@ -82,7 +82,7 @@ export default class Acid {
         if (!rt) {
             return Promise.reject(`Unable to map route for ${route}`);
         }
-        const resolver = rt.fn();
+        const resolver = rt.fn;
 
         // render the route
         if (resolver.resolveTemplate) {
@@ -102,12 +102,12 @@ export default class Acid {
 // create a new instance of Acid
 export function create(options) {
     if (!options) {
-        let configPath = path.resolve('acid.config.js');
+        const configPath = path.resolve('acid.config.js');
         if (fs.existsSync(configPath)) {
             options = require(configPath);
         }
     }
 
-    let instance = new Acid(options);
+    const instance = new Acid(options);
     return instance.registerRoutes().then(() => instance);
 }
