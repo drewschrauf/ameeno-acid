@@ -1,4 +1,13 @@
 language: node_js
 node_js:
-    - "5"
-    - "4"
+- '5'
+- '4'
+deploy:
+  provider: npm
+  email: andrew.schrauf@gmail.com
+  api_key:
+    secure: KBCDpaB94VVhkn/QQay7K4xtO4DrUGxG+evNwWkY5HYkIrai18gDreMqcwjojTZ4ZFIIJ1HvOBeSSsffVFYGhJp+GIsoPHWaK3W2i2i8hivqqXNwaN51GGzYKpCMjN/s3b/ThbMNxSqBPfgSRl7t4/GhfXbpWaJopIPcB3u6HoEwbPK8BFY9PhBBWKFwm0F5Uj3nX0nUpN+X3o3hdSTNNEHv5bjGK05WwUZX/pbaRo/HMFu574m2FZr2hyFiOtiJ9tXyWlps8S+mFBESrPdDigs+Grgldf84OQfydXgsJJoOel4SqgxNNHh69+QRQkVeXMKd9enz5GVWnSv8j7tNaPL0SJiKlpTdF5CMfo/SUw1rrBozOlvfg1W/zRKuM5VGIylFw0HSLkINzoosDSKcSxz4QKzJqsIdbAXjNviX8CLa3tZCODQrCH26zWtIgfVYEHFc7gSdFVHkD8JlYKj7qzfEV0mFP/DpENNdrGg8TNg/fmuFuLXQzZlm3Rx5LgqR2R/8vt9MMjzr60VjvfllhRN1OQe5krjGZJJ5klpCQWZ4tTbsZ6+QaYcjzIT630UZcSB8ufHQWPQxb8UrQ9zD/lj3w8w2IuRZs+GJdhYQp90KsIUEpiz1yj4atDzQ5ZDPwiYDYlqH86RBIznchnYtu8cZWvnfG1LcT0huR+wOXiE=
+  on:
+    branch: production
+    tags: true
+    repo: drewschrauf/ameeno-acid
