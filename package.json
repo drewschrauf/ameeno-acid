@@ -5,20 +5,19 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib",
-    "test": "MARKO_CLEAN=true NODE_ENV=test mocha --compilers js:babel-register",
+    "test": "MARKO_CLEAN=true NODE_ENV=test mocha --compilers js:babel-register && npm run lint",
     "watch": "MARKO_CLEAN=true NODE_ENV=test mocha -w --compilers js:babel-register",
     "coverage": "rm -rf coverage && MARKO_CLEAN=true NODE_ENV=test babel-node ./node_modules/.bin/isparta cover _mocha -- --recursive",
     "lint": "eslint src",
     "xprepublish": "npm run lint && npm run test && npm run build"
   },
-  "author": "",
+  "author": "Drew Schrauf <andrew.schrauf@gmail.com>",
+  "repository": "drewschrauf/ameeno-acid",
   "license": "ISC",
   "peerDependencies": {
     "marko": "2.x"
   },
   "dependencies": {
-    "extend": "^3.0.0",
-    "markdown": "^0.5.0",
     "routes": "^2.1.0",
     "verror": "^1.6.0"
   },
@@ -35,6 +34,7 @@
     "eslint": "^1.10.3",
     "eslint-config-defaults": "^7.1.1",
     "isparta": "^4.0.0",
+    "marko": "^2.9.1",
     "mocha": "^2.1.0",
     "mock-fs": "^3.5.0",
     "rewire": "^2.3.4",
