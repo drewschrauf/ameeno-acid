@@ -15,7 +15,7 @@ Acid allows for simple data access through two main methods. The first is throug
 
 Acid plugins can provide a set of resolvers that handle requests for a given path. Each resolver is able to determine its own context item and provide the path to a template required for rendering it. As an example, you could configure a blog resolver to handle any requests under `/blog`, fetch the content from the Wordpress REST API then render the page using a template called `post.marko`.
 
-See more in the [Acid Plugins](#acid-plugins) section.
+See more in the [Writing Acid Plugins](#writing-acid-plugins) section.
 
 ### Custom Marko Tags
 
@@ -51,7 +51,7 @@ If you wish to use Acid outside of a Webpack environment, you may create an inst
         let myAcid = acid; // this is the acid instance
     });
 
-## Acid Plugins
+## Writing Acid Plugins
 
 Acid plugins can provide both routes to be added to the static site and/or configuration data for any custom Marko tags provided by the plugin. Plugins can be added either through the `acid.config.js` file or by invoking the `addPlugin(config)` method on the acid object.
 
