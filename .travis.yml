@@ -2,6 +2,8 @@ language: node_js
 node_js:
 - '5'
 - '4'
+script: npm run ci
+before_deploy: npm run build
 deploy:
   provider: npm
   email: andrew.schrauf@gmail.com
