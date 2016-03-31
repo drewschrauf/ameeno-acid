@@ -1,5 +1,8 @@
 # Acid
 
+[![Build Status](https://travis-ci.org/drewschrauf/ameeno-acid.svg?branch=master)](https://travis-ci.org/drewschrauf/ameeno-acid)
+[![Coverage Status](https://coveralls.io/repos/github/drewschrauf/ameeno-acid/badge.svg?branch=master)](https://coveralls.io/github/drewschrauf/ameeno-acid?branch=master)
+
 Acid is a fully asynchronous static site generator designed to make working with content services simple. It is designed for use with [Webpack](https://webpack.github.io/) and the excellent [Marko](http://markojs.com/) templating language.
 
 Acid allows for plugins to be written and imported to connect to any service that provides an API. These plugins can add routes in your static site as well as supply custom Marko tags that can fetch additional content mid-render.
@@ -23,7 +26,7 @@ As Marko was designed from the ground up with asynchronous rendering in mind, it
         <p class="author-name">${author.name}</p>
     </author-by-id>
 
-This allows for increased flexibility in your templates as you can decide what data you need, when you need it. More information about writing your own Marko tags can be found in the [Marko documentation](http://).
+This allows for increased flexibility in your templates as you can decide what data you need, when you need it. More information about writing your own Marko tags can be found in the [Marko documentation](http://markojs.com/docs/).
 
 ## Getting Started
 
