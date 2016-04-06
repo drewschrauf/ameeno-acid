@@ -95,17 +95,6 @@ describe('acid', () => {
                     expect(acid.plugins.testAgain).to.not.be.undefined;
                 });
             });
-
-            describe('config errors', () => {
-                it('should only allow a single default config', () => {
-                    acid.addPlugin('test', {
-                        resolver: dummyResolver
-                    });
-                    expect(acid.addPlugin.bind(acid, 'testAgain', {
-                        resolver: dummyResolver
-                    })).to.throw('default');
-                });
-            });
         });
 
         describe('renderRoute', () => {

@@ -15,7 +15,6 @@ export default class Acid {
 
         // set up some defaults
         this.pluginsArray = [];
-        this.hasDefaultConfig = false;
 
         // add the plugins if any were provided
         if (options.plugins && Array.isArray(options.plugins)) {
@@ -33,12 +32,6 @@ export default class Acid {
     // add a config object to the config array
     addPlugin(name, config) {
         let plugin = new Plugin(name, config);
-
-        if (plugin.mountPoint === '/' && this.hasDefaultConfig) {
-            throw new Error('Only one plugin can be the default');
-        } else {
-            this.hasDefaultConfig = true;
-        }
 
         // all good, let's add it to the config array
         this.pluginsArray = [...this.pluginsArray, plugin];
