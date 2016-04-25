@@ -5,7 +5,7 @@ export default class Plugin {
             config = name;
         } else {
             // overwrite the name
-            config = Object.assign({}, config, {name: name});
+            config = {...config, name};
         }
 
         // check that we were given a name
@@ -15,9 +15,19 @@ export default class Plugin {
             this.name = config.name;
         }
 
-        // set up mount point
-        this.mountPoint = config.mountPoint || '/';
+        // attach the options if we were given any
+        if (config.options) {
+            this.options = config.options;
+        }
 
+        // attach custom watch expressions if we were given any
+        if (config.watchExpressions) {
+            this.watchExpressions = config.watchExpressions;
+        } else {
+            this.watchExpressions = [];
+        }
+
+        // set up the resolvers
         if (!config.resolvers && config.resolver) {
             // if a single resolver was attached, add it to an array
             this.resolvers = [config.resolver];

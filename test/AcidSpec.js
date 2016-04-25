@@ -88,7 +88,6 @@ describe('acid', () => {
                         resolver: dummyResolver
                     });
                     acid.addPlugin('testAgain', {
-                        mountPoint: '/blah',
                         resolver: dummyResolver
                     });
                     expect(acid.plugins.test).to.not.be.undefined;
@@ -171,7 +170,6 @@ describe('acid', () => {
                     }
                 });
                 acid.addPlugin('testAgain', {
-                    mountPoint: '/test',
                     resolver: {
                         path: '/',
                         resolveTemplate: 't',

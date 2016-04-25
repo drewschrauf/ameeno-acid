@@ -38,6 +38,11 @@ describe('Plugin', () => {
             expect(plugin.resolvers).to.have.length(2);
         });
 
+        it('should attach options if provided', () => {
+            let plugin = new Plugin({name: 'name', options: 'opts'});
+            expect(plugin.options).to.equal('opts');
+        });
+
         describe('resolver errors', () => {
             it('should fail if resolver does not declare resolveTemplate', () => {
                 expect(() => new Plugin('test', {

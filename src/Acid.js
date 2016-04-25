@@ -29,6 +29,12 @@ export default class Acid {
         return arrayToObject(this.pluginsArray, 'name');
     }
 
+    get watchExpressions() {
+        return this.pluginsArray.reduce((prev, curr) => {
+            return curr.watchExpressions ? [...prev, ...curr.watchExpressions] : prev;
+        }, []);
+    }
+
     // add a config object to the config array
     addPlugin(name, config) {
         let plugin = new Plugin(name, config);
