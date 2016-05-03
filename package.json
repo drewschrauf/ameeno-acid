@@ -1,6 +1,6 @@
 {
   "name": "ameeno-acid",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A fully asynchronous static site generator using Marko templates",
   "main": "index.js",
   "scripts": {
