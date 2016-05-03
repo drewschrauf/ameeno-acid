@@ -43,6 +43,22 @@ describe('Plugin', () => {
             expect(plugin.options).to.equal('opts');
         });
 
+        it('should attach watchExpressions if provided', () => {
+            let plugin = new Plugin({name: 'name', watchExpressions: ['a', 'b']});
+            expect(plugin.watchExpressions).to.eql(['a', 'b']);
+        });
+
+        it('should default watchExpressions to an empty array if not provided', () => {
+            let plugin = new Plugin({name: 'name'});
+            expect(plugin.watchExpressions).to.eql([]);
+        });
+
+        it('should error if watchExpressions is not an array', () => {
+            expect(() => {
+                new Plugin({name: 'name', watchExpressions: 'test'});
+            }).to.throw('must be an Array');
+        });
+
         describe('resolver errors', () => {
             it('should fail if resolver does not declare resolveTemplate', () => {
                 expect(() => new Plugin('test', {

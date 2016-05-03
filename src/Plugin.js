@@ -22,6 +22,9 @@ export default class Plugin {
 
         // attach custom watch expressions if we were given any
         if (config.watchExpressions) {
+            if (!Array.isArray(config.watchExpressions)) {
+                throw new Error('watchExpressions must be an Array');
+            }
             this.watchExpressions = config.watchExpressions;
         } else {
             this.watchExpressions = [];

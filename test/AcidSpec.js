@@ -38,6 +38,31 @@ describe('acid', () => {
         }).to.throw('plugins must be an array');
     });
 
+    it('should expose watchExpressions', () => {
+        let acid = new Acid({
+            plugins: [{
+                name: 'test',
+                resolver: dummyResolver
+            }]
+        });
+        expect(acid.watchExpressions).to.be.an('Array');
+    });
+
+    it('should combine watchExpressions', () => {
+        let acid = new Acid({
+            plugins: [{
+                name: 'test',
+                resolver: dummyResolver,
+                watchExpressions: ['a']
+            }, {
+                name: 'testagain',
+                resolver: dummyResolver,
+                watchExpressions: ['b']
+            }]
+        });
+        expect(acid.watchExpressions).to.eql(['a', 'b']);
+    });
+
     it('should not allow calling renderRoute before registerRoutes', () => {
         let acid = new Acid();
         return expect(acid.renderRoute('/')).to.eventually.be.rejectedWith('registerRoutes');
