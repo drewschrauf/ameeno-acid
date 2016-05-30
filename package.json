@@ -6,8 +6,8 @@
   "scripts": {
     "ci": "npm run lint && npm run coverage && npm run coveralls",
     "build": "rm -rf lib && babel src --out-dir lib",
-    "test": "MARKO_CLEAN=true NODE_ENV=test mocha --compilers js:babel-register",
-    "watch": "NODE_ENV=test mocha -w --compilers js:babel-register",
+    "test": "cross-env MARKO_CLEAN=true NODE_ENV=test mocha --compilers js:babel-register",
+    "watch": "cross-env NODE_ENV=test mocha -w --compilers js:babel-register",
     "coverage": "rm -rf coverage && MARKO_CLEAN=true NODE_ENV=test babel-node ./node_modules/.bin/isparta cover _mocha -- --recursive",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "lint": "eslint src"
@@ -33,6 +33,7 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "coveralls": "^2.11.9",
+    "cross-env": "^1.0.8",
     "eslint": "^1.10.3",
     "eslint-config-defaults": "^7.1.1",
     "isparta": "^4.0.0",
