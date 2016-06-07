@@ -66,15 +66,15 @@ export default class Acid {
   }
 
   // render the passed route and return a promise for the result
-  renderRoute(route) {
+  async renderRoute(route) {
     if (!this.routesRegistered) {
-      return Promise.reject('Must call registerRoutes() before renderRoute(route)');
+      throw new Error('Must call registerRoutes() before renderRoute(route)');
     }
 
     // match it to a config
     const rt = this.router.match(route);
     if (!rt) {
-      return Promise.reject(`Unable to map route for ${route}`);
+      throw new Error(`Unable to map route for ${route}`);
     }
     const resolver = rt.fn;
 
@@ -88,7 +88,7 @@ export default class Acid {
         plugins: this.plugins,
       });
     }
-    return Promise.resolve(resolver.handleRoute(route, this.plugins));
+    return resolver.handleRoute(route, this.plugins);
   }
 }
 
