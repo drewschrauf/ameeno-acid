@@ -1,17 +1,6 @@
 {
     "parser": "babel-eslint",
-    "extends": ["defaults"],
-    "ecmaFeatures": {
-        "modules": true,
-        "arrowFunctions": true,
-        "blockBindings": true,
-        "templateStrings": true,
-        "objectLiteralShorthandProperties": true
-    },
-    "rules": {
-        "semi": 2,
-        "eqeqeq": 2
-    },
+    "extends": ["airbnb-base"],
     "env": {
         "node": true,
         "mocha": true

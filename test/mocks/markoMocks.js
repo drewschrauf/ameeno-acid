@@ -1,29 +1,29 @@
 export default {
-    load: () => ({
-        render: (config, callback) => {
-            callback(null, 'Result');
-        }
-    })
+  load: () => ({
+    render: (config, callback) => {
+      callback(null, 'Result');
+    },
+  }),
 };
 
 export const missingMarko = {
-    load: () => {
-        let err = new Error();
-        err.code = 'ENOENT';
-        throw err;
-    }
+  load: () => {
+    const err = new Error();
+    err.code = 'ENOENT';
+    throw err;
+  },
 };
 
 export const failToLoadMarko = {
-    load: () => {
-        throw new Error();
-    }
+  load: () => {
+    throw new Error();
+  },
 };
 
 export const failToRenderMarko = {
-    load: () => ({
-        render: (config, callback) => {
-            callback(new Error('Could not render'));
-        }
-    })
+  load: () => ({
+    render: (config, callback) => {
+      callback(new Error('Could not render'));
+    },
+  }),
 };
