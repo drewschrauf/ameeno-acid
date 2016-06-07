@@ -1,82 +1,86 @@
 import RenderError from './errors/RenderError';
 import VError from 'verror';
 
-// render a page with the given arguments using the provided marko instance
-export function renderRoute(options) {
-  if (!options.path) {
-    return Promise.reject(new RenderError('No path'));
-  }
-  if (!options.resolveTemplate) {
-    return Promise.reject(new RenderError('No template resolver'));
-  }
-  if (!options.marko) {
-    return Promise.reject(new RenderError('No marko instance'));
-  }
-
-  // get the context item
-  let context;
+async function resolveContextItem(resolveContext, path) {
   try {
-    if (!options.resolveContext) {
-      context = {};
-    } else if (typeof options.resolveContext === 'function') {
-      context = options.resolveContext(options.path);
-    } else {
-      context = options.resolveContext;
+    if (!resolveContext) {
+      return {};
+    }
+    if (typeof resolveContext === 'function') {
+      return await resolveContext(path);
+    }
+    return resolveContext;
+  } catch (err) {
+    throw new VError(err, `Context item unable to be resolved for ${path}`);
+  }
+}
+
+async function resolveTemplatePath(resolveTemplate, path, item) {
+  try {
+    // find the template to use
+    if (typeof resolveTemplate === 'function') {
+      return await resolveTemplate(path, item);
+    }
+    if (typeof resolveTemplate === 'string') {
+      return await Promise.resolve(resolveTemplate);
     }
   } catch (err) {
-    return Promise.reject(new VError(err, `Error calling context resolver for ${options.path}`));
+    throw new VError(err, 'Error resolving template path');
+  }
+  // we can only get here if resolveTemplate isn't what we need
+  throw new RenderError('resolveTemplate must be a function or a string');
+}
+
+function loadTemplate(templatePath, marko) {
+  try {
+    return marko.load(templatePath);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      throw new VError(err, `Cannot find template at ${templatePath}`);
+    } else {
+      throw new VError(err, `Error loading template at ${templatePath}`);
+    }
+  }
+}
+
+function renderTemplate(template, context, globals) {
+  return new Promise((resolve, reject) => {
+    template.render({
+      context,
+      $global: {
+        ...globals,
+        context,
+      },
+    }, (err, output) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(output);
+      }
+    });
+  });
+}
+
+// render a page with the given arguments using the provided marko instance
+export async function renderRoute(options) {
+  const { path, resolveTemplate, resolveContext, plugins, marko } = options;
+
+  if (!path) {
+    throw new RenderError('No path');
+  }
+  if (!resolveTemplate) {
+    throw new RenderError('No template resolver');
+  }
+  if (!marko) {
+    throw new RenderError('No marko instance');
   }
 
-  let contextObj;
-  return Promise.resolve(context).catch(err => {
-    throw new VError(err, `Context item unable to be resolved for ${options.path}`);
-  }).then(item => {
-    contextObj = item;
-
-    // find the template to use
-    if (typeof options.resolveTemplate === 'function') {
-      return Promise.resolve(options.resolveTemplate(options.path, item));
-    }
-    if (typeof options.resolveTemplate === 'string') {
-      return Promise.resolve(options.resolveTemplate);
-    }
-    throw new RenderError('resolveTemplate must be a function or a string');
-  })
-  .catch(err => {
-    if (err instanceof VError) throw err;
-    throw new VError(err, 'Error resolving template path');
-  })
-  .then(templatePath => {
-    let template;
-    try {
-      template = options.marko.load(templatePath);
-    } catch (err) {
-      if (err.code === 'ENOENT') {
-        throw new VError(err, `Cannot find template at ${templatePath}`);
-      } else {
-        throw new VError(err, `Error loading template at ${templatePath}`);
-      }
-    }
-
-    // render the template
-    return new Promise((resolve, reject) => {
-      template.render({
-        context: contextObj,
-        $global: {
-          context: contextObj,
-          path: options.path,
-          plugins: options.plugins,
-        },
-      }, (err, output) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(output);
-        }
-      });
-    });
-  })
-  .catch(err => {
-    throw new VError(err, `Unable to render route ${options.path}`);
-  });
+  try {
+    const item = await resolveContextItem(resolveContext, path);
+    const templatePath = await resolveTemplatePath(resolveTemplate, item, path);
+    const template = loadTemplate(templatePath, marko);
+    return renderTemplate(template, item, { path, plugins });
+  } catch (err) {
+    throw new VError(err, `Unable to render route ${path}`);
+  }
 }

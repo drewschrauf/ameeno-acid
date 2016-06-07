@@ -111,7 +111,7 @@ describe('renderer', () => {
           resolveContext: () => {
             throw new Error();
           },
-        })).to.be.rejectedWith('context resolver')
+        })).to.be.rejectedWith('unable to be resolved')
       ));
 
       it('should reject if resolveContext rejects', () => (
