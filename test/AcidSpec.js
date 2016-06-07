@@ -224,7 +224,7 @@ describe('acid', () => {
               resolveRoutes: {},
             },
           });
-          return expect(acid.resolveRoutes.bind(acid)).to.throw('resolveRoutes');
+          return expect(acid.resolveRoutes(acid)).to.eventually.be.rejectedWith('must be an Array');
         });
       });
     });

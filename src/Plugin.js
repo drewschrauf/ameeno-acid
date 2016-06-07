@@ -50,21 +50,27 @@ export default class Plugin {
     });
   }
 
-  resolveRoutes() {
-    return Promise.all(this.resolvers.map(resolver => {
-      if (typeof resolver.resolveRoutes === 'function') {
-        return Promise.resolve(resolver.resolveRoutes())
-          .then(routes => routes.map(route => ({ route, resolver })));
-      } else if (Array.isArray(resolver.resolveRoutes)) {
-        return Promise.resolve(resolver.resolveRoutes.map(route => ({ route, resolver })));
+  async resolveRoutes() {
+    const routeArrays = await Promise.all(this.resolvers.map(
+      async function resolveRoutes(resolver) {
+        // pull out routes from resolveRoutes
+        if (typeof resolver.resolveRoutes === 'function') {
+          // this is a function
+          const routes = await Promise.resolve(resolver.resolveRoutes());
+          return routes.map(route => ({ route, resolver }));
+        } else if (Array.isArray(resolver.resolveRoutes)) {
+          // this is an array
+          return Promise.resolve(resolver.resolveRoutes.map(route => ({
+            route,
+            resolver,
+          })));
+        }
+        // this wasn't either a function or an array
+        throw new Error(
+          'resolveRoutes must be an Array or a function returning an Array or Promise for an Array'
+        );
       }
-      throw new Error(
-        'resolveRoutes must be an Array or a function returning an Array or Promise for an Array'
-      );
-    })).then(routeArrays => (
-      routeArrays.reduce((prev, curr) => (
-        prev.concat(curr)
-      ), [])
     ));
+    return routeArrays.reduce((prev, curr) => [...prev, ...curr], []);
   }
 }

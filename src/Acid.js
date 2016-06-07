@@ -1,4 +1,3 @@
-/* eslint new-cap:0 */
 import Plugin from './Plugin';
 import Router from 'routes';
 import fs from 'fs';
@@ -42,33 +41,28 @@ export default class Acid {
 
     // all good, let's add it to the config array
     this.pluginsArray = [...this.pluginsArray, plugin];
-
     this.routesRegistered = false;
   }
 
-  registerRoutes() {
-    this.router = Router();
+  async registerRoutes() {
+    this.router = Router(); // eslint-disable-line new-cap
 
-    return Promise.all(this.pluginsArray.map(plugin => (
+    const routesArray = await Promise.all(this.pluginsArray.map(plugin => (
       plugin.resolveRoutes()
-    ))).then(routesArray => {
-      flattenArray(routesArray).forEach(route => {
-        this.router.addRoute(route.route, route.resolver);
-      });
-
-      this.routesRegistered = true;
+    )));
+    flattenArray(routesArray).forEach(route => {
+      this.router.addRoute(route.route, route.resolver);
     });
+
+    this.routesRegistered = true;
   }
 
   // resolve all routes from all plugins
-  resolveRoutes() {
-    return Promise.all(this.pluginsArray.map(plugin => (
+  async resolveRoutes() {
+    const routesArray = await Promise.all(this.pluginsArray.map(plugin => (
       plugin.resolveRoutes()
-    ))).then(routesArray => (
-      flattenArray(routesArray)
-    )).then(routes => (
-      routes.map(route => route.route)
-    ));
+    )));
+    return flattenArray(routesArray).map(route => route.route);
   }
 
   // render the passed route and return a promise for the result
